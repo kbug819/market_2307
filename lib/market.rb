@@ -24,5 +24,4 @@ class Market
     end
     list
   end
-    
 end
