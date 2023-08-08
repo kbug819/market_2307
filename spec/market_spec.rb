@@ -11,10 +11,10 @@ RSpec.describe Market do
     @vendor1.stock(@item2, 7)
 
     @vendor2 = Vendor.new("Ba-Nom-a-Nom")
-    @item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
     @item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
-    @vendor2.stock(@item4, 50)
+    @item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
     @vendor2.stock(@item3, 25)
+    @vendor2.stock(@item4, 50)
 
     @vendor3 = Vendor.new("Palisade Peach Shack")
     @vendor3.stock(@item1, 65)
@@ -78,6 +78,46 @@ RSpec.describe Market do
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
       expect(@market.sorted_item_list).to eq(["Banana Nice Cream",'Peach', "Peach-Raspberry Nice Cream",'Tomato'])
+    end
+  end
+
+  # describe "list_of_items" do
+  #   it "returns a list of items" do
+  #     @market.add_vendor(@vendor1)
+  #     @market.add_vendor(@vendor2)
+  #     @market.add_vendor(@vendor3)
+  #     expect(@market.list_of_items).to eq([@item1, @item2, @item3, @item4])
+  #   end
+  # end
+
+  describe "#quantity" do
+    it "returns total quantity of an item" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.quantity(@item1)).to eq(100)
+    end
+  end
+
+  describe "total inventory" do
+    it "returns a total inventory hash" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.total_inventory).to eq({
+                                              @item1 => {:Quantity => 100, :Vendors => [@vendor1, @vendor3]},
+                                              @item2 => {:Quantity => 7, :Vendors => [@vendor1]}, 
+                                              @item3 => {:Quantity => 25, :Vendors => [@vendor2]}, 
+                                              @item4 => {:Quantity => 50, :Vendors => [@vendor2]}})
+    end
+  end
+
+  describe "overstocked_items" do
+    it "returns an array of itmes that are overstocked" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.overstocked_items).to eq([@item1])
     end
   end
 end
