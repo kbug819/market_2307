@@ -35,16 +35,6 @@ class Market
     list_item_names.uniq.sort
   end
 
-  # def list_of_items 
-  #   list = []
-  #   @vendors.each do |vendor|
-  #     vendor.inventory.each do |item|
-  #       list << item[0]
-  #     end
-  #   end
-  #   list.uniq
-  # end
-
   def quantity(item)
     total = 0
     @vendors.each do |vendor|
@@ -55,7 +45,6 @@ class Market
       end
     end
     total
-
   end
 
 

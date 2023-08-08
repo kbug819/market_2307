@@ -81,15 +81,6 @@ RSpec.describe Market do
     end
   end
 
-  # describe "list_of_items" do
-  #   it "returns a list of items" do
-  #     @market.add_vendor(@vendor1)
-  #     @market.add_vendor(@vendor2)
-  #     @market.add_vendor(@vendor3)
-  #     expect(@market.list_of_items).to eq([@item1, @item2, @item3, @item4])
-  #   end
-  # end
-
   describe "#quantity" do
     it "returns total quantity of an item" do
       @market.add_vendor(@vendor1)
@@ -117,7 +108,10 @@ RSpec.describe Market do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
+      
       expect(@market.overstocked_items).to eq([@item1])
+      @vendor3.stock(@item4, 50)
+      expect(@market.overstocked_items).to eq([@item1, @item4])
     end
   end
 end
